@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Vue.Js</title>
+    <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+    <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+    <div class="mydiv">
+        <p>Welcom {{ name }} - {{ family }} we are gladd to see You</p>
+        <p>Your Age is {{ age}}</p>
+        <p>Your skills is {{ skills }}</p>
+        <p>married {{ married ? "yes married" : "not married" }}</p>
+        <p v-if="single">Your Family Salary is 1000</p>
+        <p v-else>You dont have family salary</p>
+
+        <p v-if="age>=50">Your are too old</p>
+        <p v-else-if="age>=15 && age<50">yong man</p>
+        <p v-else>too small</p>
+        <p>Your exams {{ exams[0].examName }} your got {{exams[0].grade}}</p>
+        <p>Using Function {{ displayMyName() }}</p>
+        <p>using Function {{ displayAgeInDays() }}</p>
+        <button v-on:click="clickMe">click here</button>
+        <p v-text="displayMyName()"></p>
+        <p v-text="age"></p>
+        <p v-html="title"></p>
+        <ul>
+            <li v-for="(skill,ind) in skills">
+            {{ind}}->{{skill}}
+            </li>
+        </ul>
+        <ul class="withhref">
+            <li v-for="(sub,index) in subjects">
+            <a v-bind:href="sub.id">{{sub.subject}} - {{index}}</a>
+            </li>
+        </ul>
+        <div class="main">
+            <div class="child" v-for="sub in subjects">
+                <img :src="sub.img" :alt="sub.alternateText">
+                <span>{{sub.subject}}</span>
+            </div>
+        </div>  
+            
+    
+    </div>
+    
+    <div class="myForm">
+    <form action=""  style="margin-top:20px">
+        <input type="text" :value="name">  
+        <input type="text" v-model="name"> 
+        <input type="checkbox" v-model="checked">
+        <label v-if="checked">yes it is checked</label>
+        <label v-else>no it is not checked</label>
+        <br>
+        <input type="checkbox" v-model="skills" value="HTML"><label>HTML</label>
+        <input type="checkbox" v-model="skills" value="CSS"><label>CSS</label>
+        <input type="checkbox" v-model="skills" value="JS"><label>JS</label>
+        <label >{{skills}}</label>
+    </form>
+    <p>{{name}}</p>
+    <my-component :src1="src1" :src2="src2"></my-component>
+    <my-component :src1="src1" :src2="src2"></my-component>
+    <my-component :src1="src1" :src2="src2"></my-component>
+    <my-component :src1="src1" :src2="src2"></my-component>
+    </div>
+  
+   
+<script>
+    Vue.component('my-component',{
+        data :
+            function() {
+                return {
+                    name :'ahmad',
+                    count :0
+                }
+            }
+
+        ,
+        props:['src1','src2','src3'],
+        template : '<p>Hi {{name}} click on the button to  add counter <button @click="count++">click me</button> - {{count}} Times, note {{src1}} and {{src2}}<p>'
+        })
+
+    
+    var vn=new Vue({
+        el:'.myForm',
+        data:{
+            name:'fadi2023',
+            checked:false,
+            src1:"source 1",
+            src2:"source 2",
+            src3:"source 3",
+            skills:['HTML']
+        }
+    });
+
+    var vm = new Vue({
+        el : '.mydiv',
+        data : {
+            name : 'Ahmad',
+            family : 'Hammoud',
+            single:'',
+            age : 5,
+            title :"<b>PHD</b>",
+            skills : ["HTML","CSS","JS"],
+            subjects: [
+                {
+                    id :1,
+                    subject : "HTML",
+                    img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpngGRjYX1ca7qAADU3K6eGLj7ShQE3L2otdzfryl_Y9Ht2QRoQKYQbsXd36XIxMbYOw0&usqp=CAU",
+                    alternateText:"test 2022"
+                },
+                {
+                    id:2,
+                    subject:"JAVA SCRIPT",
+                    img:"data:image/png;base64,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"
+
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                },
+                {
+                    id:3,
+                    subject:"C#",
+                    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/C_Sharp_wordmark.svg/1200px-C_Sharp_wordmark.svg.png"
+                }
+            ],
+            married : false,
+            exams:[
+                {
+                    examName : 'HTML',
+                    grade:'80%'
+                },
+                {
+                    examName : 'CSS',
+                    grade:'75%'
+                },
+                {
+                    examName : 'JS',
+                    grade:'90%'
+                }
+        ]
+        },
+        methods :{
+            displayMyName : function() {
+                return "Your Name is " + this.name
+            },
+            displayAgeInDays: function(){
+                return "Your age in days is " + this.age * 365
+            },
+            clickMe: function(){
+            this.name="Jawad";
+            }
+        }
+            
+
+    })
+</script>
+<script src="myscript.js"></script>
+</body>
+</html>

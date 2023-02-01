@@ -1,0 +1,27 @@
+
+*{
+    font-family: 'Helvetica Neue', sans-serif;
+}
+a{
+width:100%;
+display: inline-block;
+}
+ul.withhref li{
+    list-style-type: none;
+    margin-bottom: 10px;
+    width:200px;
+    border:0px solid green
+}
+.main{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr) ) ;
+    column-gap: 10px;
+}
+.child{
+    display: flex;
+    flex-direction: column;
+    border:1px solid green;
+}
+.child img{
+    width:100%;
+}

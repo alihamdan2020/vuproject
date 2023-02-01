@@ -1,0 +1,14 @@
+.items {
+	display:flex;
+	
+}
+
+.item {
+	width:150px;
+	border:1px solid green;
+	display:flex;
+	flex-direction:column;
+}
+.tem img{
+	width:100%;
+}
